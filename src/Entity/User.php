@@ -91,7 +91,7 @@ class User implements UserInterface
     private $article;
 
     /**
-     * @ORM\OneToOne(targetEntity=Revision::class, mappedBy="auteur", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Revision::class, mappedBy="auteur", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="revision", nullable=true)
      */
     private $revision;
@@ -112,6 +112,7 @@ class User implements UserInterface
     {
         $this->texte = new ArrayCollection();
         $this->article = new ArrayCollection();
+        $this->revision = new ArrayCollection();
         $this->setRoles(["ROLE_USER"]);
     }
 
@@ -256,22 +257,32 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRevision(): ?Revision
+    /**
+     * 
+     * @return Collection|Revision[]
+     */
+    public function getRevision(): Collection
     {
         return $this->revision;
     }
 
-    public function setRevision(?Revision $revision): self
+    public function addRevision(Revision $revision): self
     {
-        $this->revision = $revision;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newAuteur = null === $revision ? null : $this;
-        if ($revision->getAuteur() !== $newAuteur) {
-            $revision->setAuteur($newAuteur);
+        if (!$this->revision->contains($revision)) {
+            $this->revision[] = $revision;
         }
-
-        return $this;    }
+        
+        return $this;
+    }
+    
+    public function removeRevision(Revision $revision): self
+    {
+        if ($this->revision->contains($revision)) {
+            $this->revision->remove($revision);
+        }
+        
+        return $this;
+    }
 
 
     

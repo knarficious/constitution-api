@@ -33,7 +33,8 @@ class Revision
     private $contenu;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="revision", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="revision")
+     * @ORM\JoinColumn(name="user", nullable=true)
      */
     private $auteur;
 
@@ -46,7 +47,7 @@ class Revision
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="revisions")
      * 
-     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $article;
 

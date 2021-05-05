@@ -3,10 +3,11 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class UserFixture extends BaseFixture
+class UserFixture extends Fixture
 {
     private $passwordEncoder;
 
@@ -32,5 +33,8 @@ class UserFixture extends BaseFixture
 
         $manager->flush();
     }
+    public function load(ObjectManager $manager)
+    {}
+
 }
 
