@@ -55,7 +55,6 @@ class Article
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank
      * 
      * @Groups({"article:get", "article:post", "article:put"})
      */
