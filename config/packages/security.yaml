@@ -46,6 +46,7 @@ security:
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/textes/*, methods: ["GET"], roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/articles/*, methods: ["GET", "POST"], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/articles, methods: ["GET", "POST"], roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/revisions/*, methods: ["GET"], roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/textes, methods: ["POST", "PUT", "UPDATE", "DELETE"], roles: IS_AUTHENTICATED_FULLY }
