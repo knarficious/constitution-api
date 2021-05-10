@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Psr\Log\LoggerInterface;
 
 class SecurityController extends AbstractController
 {
@@ -47,12 +48,17 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $entityManager,
+        LoggerInterface $logger)
     {
         $values = json_decode($request->getContent());
-        if(isset($values->username,$values->password)) {
+        if(isset($values->username,$values->email,$values->password)) {
             $user = new User();
             $user->setUsername($values->username);
+            $user->setEmail($values->email);
             $user->setPassword($passwordEncoder->encodePassword($user, $values->password));
             $user->setRoles($user->getRoles());
             $entityManager->persist($user);
@@ -60,7 +66,8 @@ class SecurityController extends AbstractController
 
             $data = [
                 'status' => 201,
-                'message' => 'L\'utilisateur a été créé'
+                'message' => 'L\'utilisateur a été créé',
+                'values' => $values
             ];
 
             return new JsonResponse($data, 201);
@@ -68,7 +75,8 @@ class SecurityController extends AbstractController
         else {
             $data = [
             'status' => 500,
-            'message' => 'Vous devez renseigner les clés username et password'
+            'message' => 'Vous devez renseigner les clés username, email et password',
+                'values' => $values
         ];
         return new JsonResponse($data, 500); 
             
