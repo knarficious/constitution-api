@@ -52,4 +52,4 @@ security:
         - { path: ^/textes, methods: ["POST", "PUT", "UPDATE", "DELETE"], roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/articles, methods: ["PUT", "UPDATE", "DELETE"], roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/revisions, methods: ["POST", "PUT", "UPDATE", "DELETE"], roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/users, methods: ["POST", "PUT", "UPDATE", "DELETE"], roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/users, methods: ["PUT", "UPDATE", "DELETE"], roles: IS_AUTHENTICATED_FULLY }
